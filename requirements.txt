@@ -1,3 +1,5 @@
 pandas 
-ollama
-numpy 
+google-cloud-storage
+numpy
+scikit-learn 
+pyyaml
