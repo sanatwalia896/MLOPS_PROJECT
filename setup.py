@@ -5,7 +5,7 @@ with open("requirements.txt") as f:
 
 setup(
     name="Hotel_Reservation_mlops",
-    version="0.1",
+    version="0.2",
     author="Sanat Walia",
     author_email="codersanat896@gmail.com",
     packages=find_packages(),

@@ -3,3 +3,5 @@ google-cloud-storage
 numpy
 scikit-learn 
 pyyaml
+seaborn 
+matplotlib 
