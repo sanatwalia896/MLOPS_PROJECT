@@ -5,3 +5,7 @@ scikit-learn
 pyyaml
 seaborn 
 matplotlib 
+statsmodels
+imbalanced-learn
+xgboost 
+lightgbm
