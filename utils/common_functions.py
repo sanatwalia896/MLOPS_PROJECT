@@ -1,9 +1,10 @@
 #function for reading a yaml file 
 import os
-import pandas  # type: ignore
+import pandas as pd # type: ignore
 from src.logger import get_logger
 from src.custom_exception import CustomException
 import yaml # type: ignore
+
 
 logger=get_logger(__name__)
 
@@ -18,3 +19,13 @@ def read_yaml(file_path):
     except Exception as e:
         logger.error("Error while reading YAML file ")
         raise CustomException("Failed to read the YAML FILE ",e)
+    
+def load_data(path):
+    try:
+        logger.info("Loading Data")
+        return pd.read_csv(path)
+    except Exception as e:
+        logger.error("Error loading the data {e}")
+        raise CustomException("Failded to load the data",e)
+    
+    
