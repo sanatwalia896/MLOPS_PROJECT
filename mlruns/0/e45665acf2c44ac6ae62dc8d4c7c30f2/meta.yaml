@@ -1,0 +1,14 @@
+artifact_uri: file:///Users/sanatwalia/Desktop/projects/Hotel_Reservation/mlruns/0/e45665acf2c44ac6ae62dc8d4c7c30f2/artifacts
+end_time: 1749631768776
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: e45665acf2c44ac6ae62dc8d4c7c30f2
+run_name: clumsy-moth-329
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1749631621790
+status: 3
+tags: []
+user_id: sanatwalia
