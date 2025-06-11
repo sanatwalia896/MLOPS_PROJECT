@@ -9,11 +9,11 @@ LIGHTGBM_PARAMS={
        
 }
 
-RANDOM_SEARCH_PARAMS = {
-    'n_iter': 10,
-    'cv': 4,
-    'n_jobs': -1,
-    'verbose': 2,
-    'random_state': 42,
-    'scoring': 'accuracy'
+RANDOM_SEARCH_PARAMS={
+    'n_iter':4,
+    'cv':2,
+    'n_jobs':-1,
+    'verbose':2,
+    'random_state':42,
+    'scoring':'accuracy'
 }

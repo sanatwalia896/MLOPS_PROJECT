@@ -192,3 +192,7 @@ cython_debug/
 #  refer to https://docs.cursor.com/context/ignore-files
 .cursorignore
 .cursorindexingignore
+
+Hotel_Reservation_mlops.egg-info/
+mlruns/
+hotel_res_logs/
