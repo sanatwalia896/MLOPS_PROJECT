@@ -11,7 +11,7 @@ class CustomException(Exception):
     @staticmethod
     def get_detailed_error_message(error_message, error_detail=sys):
         # Use exc_info() to get the current exception info: (type, value, traceback)
-        exc_type, exc_value, exc_tb = error_detail.exc_info()
+        _,_, exc_tb = traceback.sys.exc_info()
         if exc_tb is not None:
             # Get the last traceback frame (most recent call)
             last_traceback = traceback.extract_tb(exc_tb)[-1]
