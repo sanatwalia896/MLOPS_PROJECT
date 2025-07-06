@@ -280,4 +280,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Contact
 For questions or inquiries, contact the project maintainer:
 - GitHub: [sanatwalia896](https://github.com/sanatwalia896)
-- Email: sanatwalia896@example.com
+- Email: codersanat896@gmail.com
