@@ -24,7 +24,7 @@ pipeline {
             }
         }
 
-        stage('Building and Pushing Docker Image to GCR') {
+        stage('Build and Push Docker Image to GCR') {
             steps {
                 withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
                     script {
@@ -41,7 +41,7 @@ pipeline {
                         echo "🔐 Configuring Docker to use GCR"
                         gcloud auth configure-docker --quiet
 
-                        echo "🐳 Building Docker image (default linux/amd64)"
+                        echo "🐳 Building Docker image"
                         docker build -t gcr.io/${GCP_PROJECT}/ml-project:latest .
 
                         echo "📤 Pushing Docker image to GCR"
@@ -52,7 +52,7 @@ pipeline {
             }
         }
 
-        stage('Deploying to Google Cloud Run') {
+        stage('Deploy to Google Cloud Run') {
             steps {
                 withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
                     script {
@@ -66,7 +66,6 @@ pipeline {
                         echo "🔧 Setting GCP project"
                         gcloud config set project ${GCP_PROJECT} --quiet
 
-                        echo "🚀 Deploying container to Cloud Run"
                         gcloud run deploy ml-project \
                             --image=gcr.io/${GCP_PROJECT}/ml-project:latest \
                             --platform=managed \
@@ -74,7 +73,7 @@ pipeline {
                             --allow-unauthenticated \
                             --quiet
 
-                        echo "✅ Deployment to Cloud Run successful!"
+                        echo "✅ Cloud Run deployment complete!"
                         """
                     }
                 }

@@ -36,7 +36,6 @@
     
         
 
-
 from flask import Flask
 import os
 
@@ -44,9 +43,9 @@ app = Flask(__name__)
 
 @app.route("/")
 def health():
-    return "✅ App is alive", 200
+    return "✅ Cloud Run is alive!", 200
 
 if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8080))
-    print(f"Starting app on port {port}")
+    port = int(os.environ.get("PORT", 8080))  # Cloud Run injects PORT
+    print(f"🚀 App starting on port {port}")
     app.run(host="0.0.0.0", port=port)
