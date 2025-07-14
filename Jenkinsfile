@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         GCP_PROJECT = "second-core-462010-p4"
-        GCLOUD_PATH = '/var/jenkins_home/google-cloud-sdk/bin'  // Added missing slash at the start
+        GCLOUD_PATH = '/var/jenkins_home/google-cloud-sdk/bin'
     }
 
     stages {
@@ -24,7 +24,6 @@ pipeline {
             }
         }
 
-
         stage('Building and Pushing Docker image to GCR') {
             steps {
                 withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
@@ -42,21 +41,20 @@ pipeline {
                         echo "Configuring Docker to use GCR"
                         gcloud auth configure-docker --quiet
 
-                        echo "Building Docker image"
-                        docker build -t gcr.io/${GCP_PROJECT}/ml-project:latest .
-
-                        echo "Pushing Docker image to GCR"
-                        docker push gcr.io/${GCP_PROJECT}/ml-project:latest
+                        echo "Building Docker image for linux/amd64"
+                        docker buildx create --use || true
+                        docker buildx build --platform=linux/amd64 -t gcr.io/${GCP_PROJECT}/ml-project:latest --push .
                         """
                     }
                 }
             }
         }
-        stage('Deploying to google cloud run ') {
+
+        stage('Deploying to Google Cloud Run') {
             steps {
                 withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
                     script {
-                        echo 'Deploying to google cloud run ......'
+                        echo 'Deploying to Google Cloud Run ......'
                         sh """
                         export PATH=$PATH:${GCLOUD_PATH}
 
@@ -66,14 +64,12 @@ pipeline {
                         echo "Setting GCP project"
                         gcloud config set project ${GCP_PROJECT}
 
+                        echo "Deploying to Cloud Run"
                         gcloud run deploy ml-project \
                             --image=gcr.io/${GCP_PROJECT}/ml-project:latest \
                             --platform=managed \
                             --region=us-central1 \
                             --allow-unauthenticated
-
-
-                       
                         """
                     }
                 }
