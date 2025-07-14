@@ -2,7 +2,6 @@ pipeline {
     agent any 
 
     environment {
-        VENV_DIR = 'venv'
         GCP_PROJECT = "second-core-462010-p4"
         GCLOUD_PATH = '/var/jenkins_home/google-cloud-sdk/bin'  // Added missing slash at the start
     }
@@ -25,20 +24,6 @@ pipeline {
             }
         }
 
-        stage('Setting up Virtual Environment and Installing Dependencies') {
-            steps {
-                script {
-                    echo 'Setting up virtual environment and installing dependencies ............'
-
-                    sh """
-                    python3 -m venv \$VENV_DIR
-                    . \$VENV_DIR/bin/activate
-                    pip install --upgrade pip 
-                    pip install -e .
-                    """
-                }
-            }
-        }
 
         stage('Building and Pushing Docker image to GCR') {
             steps {
