@@ -24,11 +24,11 @@ pipeline {
             }
         }
 
-        stage('Build and Push Docker Image to GCR') {
+        stage('Build and Push Docker Image (linux/amd64)') {
             steps {
                 withCredentials([file(credentialsId: 'gcp-key', variable: 'GOOGLE_APPLICATION_CREDENTIALS')]) {
                     script {
-                        echo '🐳 Building and pushing Docker image to GCR...'
+                        echo '🐳 Building and pushing Docker image for linux/amd64...'
                         sh """
                         export PATH=$PATH:${GCLOUD_PATH}
 
@@ -41,11 +41,11 @@ pipeline {
                         echo "🔐 Configuring Docker to use GCR"
                         gcloud auth configure-docker --quiet
 
-                        echo "🐳 Building Docker image"
-                        docker build -t gcr.io/${GCP_PROJECT}/ml-project:latest .
+                        echo "🔨 Creating Docker buildx builder"
+                        docker buildx create --use || true
 
-                        echo "📤 Pushing Docker image to GCR"
-                        docker push gcr.io/${GCP_PROJECT}/ml-project:latest
+                        echo "🐳 Building and pushing Docker image for amd64"
+                        docker buildx build --platform=linux/amd64 -t gcr.io/${GCP_PROJECT}/ml-project:latest --push .
                         """
                     }
                 }

@@ -1,21 +1,28 @@
-# Base image
+# Base image (lightweight Python)
 FROM python:3.11-slim-bullseye
 
-# Working directory
-WORKDIR /app
-
-# Prevent .pyc files, force stdout
+# Avoid .pyc files and buffering
 ENV PYTHONDONTWRITEBYTECODE=1 \
     PYTHONUNBUFFERED=1
 
-# Copy app code
+# Set working directory
+WORKDIR /app
+
+# Install dependencies (add git if MLflow ever returns)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libgomp1 \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Copy project files into the container
 COPY . .
 
-# Install dependencies
-RUN pip install flask
+# Install Python dependencies
+RUN pip install --no-cache-dir -e .
 
-# Expose port for Cloud Run
+
+
+# Expose port Cloud Run expects
 EXPOSE 8080
 
-# Run the Flask app
+# Start the Flask app
 CMD ["python", "application.py"]
